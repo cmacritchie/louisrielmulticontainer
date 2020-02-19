@@ -3,12 +3,12 @@ sudo: required
 services:
     - docker
 
-before_install:
-    - docker build -t andymac007/lrh-test -f ./louisrielweb/Dockerfile.dev ./louisrielweb
-    # additonal test
+# before_install:
+#     - docker build -t andymac007/lrh-test -f ./louisrielweb/Dockerfile.dev ./louisrielweb
+#     # additonal test
 
-script:
-    - docker run -e CI=true andymac007/lrh-test npm test 
+# script:
+#     - docker run -e CI=true andymac007/lrh-test npm test 
 
 
 after_success:
