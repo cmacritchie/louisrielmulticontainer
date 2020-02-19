@@ -1,0 +1,52 @@
+version: '3'
+services:
+    mongo:
+        image: mongo
+        restart: always
+        ports:
+            - "27017:27017"
+    nginx:
+        restart: always
+        depends_on:
+            - api
+            - client
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports: 
+            - '3050:80'   
+    api:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./Server
+        volumes:
+            #check the Docker file and you'll see /app as working directory
+            - /app/node_modules   #this pretty much says don't try to overwrite it or anything, leave it.
+            - ./Server:/app # any time our application is going to grab something from app directory, it needs to look in server directory
+        environment: 
+            - MONGODB=mongodb://mongo:27017/house-system-api
+            - MONGODB_PORT=27017
+            - GOOGLE_CLIENT_ID=946656225869-eb83agap3btch911efvrfrdv3shi8gu6.apps.googleusercontent.com
+            - GOOGLE_CLIENT_SECRET=78beL0Y8NwFEi-w3tMWpOyX8
+            - COOKIE_KEY=ncqnjdfajdkfasdbhfhljakdjfbfkltrqewtt
+        links:
+            - mongo
+        ports:
+            - 5000:5000
+    client:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./louisrielweb
+        volumes:
+            - /app/node_modules
+            - ./louisrielweb:/app
+        ports:
+            - 3000:3000
+            
+
+#put process dev stuff in here?
+
+           # MONGODB=mongodb://127.0.0.1:27017/house-system-api
+#GOOGLE_CLIENT_ID=946656225869-eb83agap3btch911efvrfrdv3shi8gu6.apps.googleusercontent.com
+#GOOGLE_CLIENT_SECRET=78beL0Y8NwFEi-w3tMWpOyX8
+#COOKIE_KEY=ncqnjdfajdkfasdbhfhljakdjfbfkltrqewtt

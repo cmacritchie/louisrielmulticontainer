@@ -1,0 +1,25 @@
+version: '3'
+services:
+    api:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./Server
+        volumes:
+            #check the Docker file and you'll see /app as working directory
+            - /app/node_modules   #this pretty much says don't try to overwrite it or anything, leave it.
+            - ./Server:/app # any time our application is going to grab something from app directory, it needs to look in server directory
+        environment: 
+            - MONGODB=mongodb://mongo:27017/house-system-api
+            - MONGODB_PORT=27017
+            - GOOGLE_CLIENT_ID=946656225869-eb83agap3btch911efvrfrdv3shi8gu6.apps.googleusercontent.com
+            - GOOGLE_CLIENT_SECRET=78beL0Y8NwFEi-w3tMWpOyX8
+            - COOKIE_KEY=ncqnjdfajdkfasdbhfhljakdjfbfkltrqewtt
+        links:
+            - mongo
+        ports:
+            - 5000:5000
+            - "9229:9229"
+        command:
+            - node
+            - "--inspect-brk=0.0.0.0"
+            - "." 
