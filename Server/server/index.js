@@ -55,9 +55,8 @@ rootSocket(io)
 //     socket.on("disconnect", () => console.log("Client disconnected"))
 // })
 
-
 server.listen(port, () => {
-    console.log('Server with websocket is up on port ' + port)
+    console.log('Server with websocket is up on port ' + port) 
 })
 
 // app.listen(port, () => {

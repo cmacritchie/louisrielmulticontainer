@@ -24,11 +24,11 @@ services:
             - /app/node_modules   #this pretty much says don't try to overwrite it or anything, leave it.
             - ./Server:/app # any time our application is going to grab something from app directory, it needs to look in server directory
         environment: 
-            - MONGODB=mongodb://mongo:27017/house-system-api
-            - MONGODB_PORT=27017
-            - GOOGLE_CLIENT_ID=946656225869-eb83agap3btch911efvrfrdv3shi8gu6.apps.googleusercontent.com
-            - GOOGLE_CLIENT_SECRET=78beL0Y8NwFEi-w3tMWpOyX8
-            - COOKIE_KEY=ncqnjdfajdkfasdbhfhljakdjfbfkltrqewtt
+            - MONGODB=${MONGODB}
+            - MONGODB_PORT=${MONGODB_PORT}
+            - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+            - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+            - COOKIE_KEY=${COOKIE_KEY}
         links:
             - mongo
         ports:
