@@ -15,7 +15,7 @@ const Support = () => {
                 -Craig
                 <br />
                 <br />
-                email: &nbsp;
+                email : &nbsp;
                 
                 <a href="mailto:craig.macritchie@gmail.com?
                 subject= Louis Riel House App">
