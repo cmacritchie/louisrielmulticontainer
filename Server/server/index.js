@@ -44,21 +44,10 @@ const port = process.env.PORT || 5000
 const server = http.createServer(app);
 const io = socketIo(server)
 rootSocket(io)
-// io.on("connection", socket => {
-//     console.log("New Client connected")
+app.set('socketio', io)
 
-//     socket.on('incomingData', (data)=> {
-//         console.log('received incoming data', data)
-//         socket.broadcast.emit("outgoing data", { num: data })
-//     });
-
-//     socket.on("disconnect", () => console.log("Client disconnected"))
-// })
 
 server.listen(port, () => {
     console.log('Server with websocket is up on port ' + port) 
 })
 
-// app.listen(port, () => {
-//     console.log('Server is up on port ' + port)
-// })

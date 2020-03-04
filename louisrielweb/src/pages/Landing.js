@@ -29,13 +29,16 @@ const Landing = ({ sumEntries }) => {
 
     useEffect(() => {
         socket.on("postedData", data => {
-            wsPostPoints(data.num)
+            // console.log(data)
+            wsPostPoints(data)
         })   
         socket.on("deletedData", data => {
-            wsDeletePoints(data.num)
+            wsDeletePoints(data)
         })   
         socket.on("patchedData", data => {
+            console.log('patch,', data)
             wsPatchPoints(data.num)
+            // wsPatchPoints(data.num)
         })
     }, [])
 

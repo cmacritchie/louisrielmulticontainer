@@ -46,7 +46,7 @@ services:
 
 #put process dev stuff in here?
 
-           # MONGODB=mongodb://127.0.0.1:27017/house-system-api
+# MONGODB=mongodb://127.0.0.1:27017/house-system-api
 #GOOGLE_CLIENT_ID=946656225869-eb83agap3btch911efvrfrdv3shi8gu6.apps.googleusercontent.com
 #GOOGLE_CLIENT_SECRET=78beL0Y8NwFEi-w3tMWpOyX8
 #COOKIE_KEY=ncqnjdfajdkfasdbhfhljakdjfbfkltrqewtt

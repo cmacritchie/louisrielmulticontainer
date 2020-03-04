@@ -10,7 +10,8 @@ const userAuth = require('../middleware/userAuth')
 const router = new express.Router()
 
 router.post('/api/house', userAuth, async (req, res) => {
-    console.log(req.user._id)
+    const io = req.app.get('socketio')
+
     const housePoints = new HousePoints({
         ...req.body,
         owner: req.user._id
@@ -18,6 +19,7 @@ router.post('/api/house', userAuth, async (req, res) => {
 
     try {
         await housePoints.save()
+        io.emit('postedData', housePoints)
         res.status(201).send(housePoints)
     } catch (e) {
         res.status(400).send(e)
@@ -115,6 +117,8 @@ router.get('/api/house/:id', userAuth, async (req, res) => {
 
 //refactor
 router.delete('/api/house/:id', userAuth, async (req, res) => {
+    const io = req.app.get('socketio')
+
     try {
     let housePoints
    
@@ -125,7 +129,7 @@ router.delete('/api/house/:id', userAuth, async (req, res) => {
         console.log('user delete')
         housePoints = await HousePoints.findOneAndDelete({_id: req.params.id, owner: req.user._id})
     }
-
+    io.emit('deletedData', housePoints)
     res.send(housePoints)
     } catch (e) {
         res.status(500).send()

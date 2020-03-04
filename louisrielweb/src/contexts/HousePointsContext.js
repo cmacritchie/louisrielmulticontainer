@@ -24,7 +24,7 @@ const housePointReducer = (state, action) => {
                     sumEntries:action.payload}
         case WS_PATCH_HOUSE_POINTS:
         case WS_SUBMIT_HOUSE_POINTS:
-            console.log(state.sumEntries, action.payload, action.type)
+            console.log(state, action)
             return {...state, sumEntries: {
                             wolf:state.sumEntries.wolf + action.payload.wolf,
                             bear:state.sumEntries.bear + action.payload.bear,
@@ -33,7 +33,7 @@ const housePointReducer = (state, action) => {
                         } 
                     }
         case WS_DELETE_HOUSE_POINTS:
-            console.log(state.sumEntries, action.payload)
+            // console.log(state.sumEntries, action.payload)
             return {...state, sumEntries: {
                             wolf:state.sumEntries.wolf - action.payload.wolf,
                             bear:state.sumEntries.bear - action.payload.bear,
@@ -42,9 +42,11 @@ const housePointReducer = (state, action) => {
                         } 
                     }
         case SUBMIT_HOUSE_POINTS:
+            console.log(state, action)
             return {...state, 
                 // entries:[action.payload, ...state.entries], 
-                entries:{[action.payload.owner]:{ 
+                    entries:{
+                        [action.payload.owner]:{ 
                             ...state.entries[action.payload.owner],
                             housePoints:[
                                 action.payload,
@@ -80,6 +82,7 @@ const housePointReducer = (state, action) => {
                     }
                 }
         case FETCH_USER_HOUSE_POINTS:
+            console.log(action.payload)
             return {...state, entries:{...state.entries, [action.payload._id]:action.payload }, entryLoaded:true}   
         case USER_ENTRIES_LOADING:
             return {...state, entryLoaded:false }
@@ -110,9 +113,9 @@ const submitPoints = dispatch => async (points) => {
         dispatch({ type: SUBMIT_HOUSE_POINTS, payload: response.data });
         history.push(`/user/${response.data.owner}`)
         toastSuccess("House Points Added")
-        socket.emit('postingData', response.data, (error) =>{
-            console.log('post ws error',error)
-        })
+        // socket.emit('postingData', response.data, (error) =>{
+        //     console.log('post ws error',error)
+        // })
 
     } catch (e) {
         toastError("Error Adding House Points")
@@ -163,9 +166,9 @@ const deletePoints = dispatch => async (id) => {
         const response = await axios.delete(`/api/house/${id}`)
         dispatch({type: DELETE_HOUSE_POINTS, payload: response.data })
         toastSuccess('House Points Deleted')
-        socket.emit('deletingData', response.data, (error) =>{
-            console.log('delete ws error',error)
-        })
+        // socket.emit('deletingData', response.data, (error) =>{
+        //     console.log('delete ws error',error)
+        // })
     } catch (e) {
         toastError('Error deleting house points')
     }
